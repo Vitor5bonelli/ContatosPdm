@@ -50,7 +50,13 @@ class MainActivity : AppCompatActivity() {
                 val contact = result.data?.getParcelableExtra<Contact>(EXTRA_CONTACT)
                 contact?.let {
                     _contact ->
-                    contactList.add(_contact)
+                    if(contactList.any {it.id == _contact.id}){
+                        val position = contactList.indexOfFirst {it.id == _contact.id}
+                        contactList[position] = _contact
+                    }
+                    else{
+                        contactList.add(_contact)
+                    }
                     contactAdapter.notifyDataSetChanged()
                 }
             }
